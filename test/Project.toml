@@ -1,0 +1,4 @@
+[deps]
+MinFEM = "bd0dc85c-d10e-11e8-1961-03914cacc29c"
+MinFEMFlow = "67bbc83b-0811-48cc-ac43-2a19a23bc93b"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

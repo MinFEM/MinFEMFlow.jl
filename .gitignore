@@ -1,0 +1,11 @@
+*.vtu
+*.txt
+*.png
+*.svg
+*.pdf
+results/
+
+docs/build/
+!docs/src/assets/**
+
+**/Manifest.toml

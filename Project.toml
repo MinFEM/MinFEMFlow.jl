@@ -1,0 +1,16 @@
+name = "MinFEMFlow"
+uuid = "67bbc83b-0811-48cc-ac43-2a19a23bc93b"
+authors = ["Martin Siebenborn <martin.siebenborn@uni-hamburg.de>", "Henrik Wyschka <henrik.wyschka@uni-hamburg.de>"]
+version = "0.0.1"
+
+[deps]
+DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+MinFEM = "bd0dc85c-d10e-11e8-1961-03914cacc29c"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+
+[compat]
+DocStringExtensions = "^0.9"
+MinFEM = "^2.2"
+julia = "^1.6"
