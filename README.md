@@ -3,6 +3,7 @@
 ## A minimal Stokes flow solver for MinFEM
 
 [![][license-badge]][license-url]
+[![][test-badge]][test-url]
 
 * The purpose of this package is to provide an easy and minimalistic solver for Stokes flow based on first order finite elements.
 
@@ -60,3 +61,5 @@ write_to_vtk(flow, "channel")
 
 [license-url]: https://github.com/MinFEM/MinFEM.jl/blob/master/LICENSE
 [license-badge]: https://img.shields.io/badge/License-MIT-brightgreen.svg
+[test-url]: https://github.com/MinFEM/MinFEMFlow.jl/actions/workflows/test.yml
+[test-badge]: https://github.com/MinFEM/MinFEMFlow.jl/actions/workflows/test.yml/badge.svg
