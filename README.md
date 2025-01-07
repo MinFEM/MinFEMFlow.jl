@@ -1,6 +1,6 @@
 # MinFEMFlow.jl
 
-## A minimal Stokes flow solver for MinFEM
+## A minimal Stokes flow solver for MinFEM.jl
 
 [![][license-badge]][license-url]
 [![][test-badge]][test-url]
