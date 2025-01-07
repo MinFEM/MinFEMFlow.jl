@@ -1,7 +1,7 @@
 name = "MinFEMFlow"
 uuid = "67bbc83b-0811-48cc-ac43-2a19a23bc93b"
 authors = ["Martin Siebenborn <martin.siebenborn@uni-hamburg.de>", "Henrik Wyschka <henrik.wyschka@uni-hamburg.de>"]
-version = "0.0.1"
+version = "0.1.0"
 
 [deps]
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
