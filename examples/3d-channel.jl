@@ -2,8 +2,8 @@ using MinFEMFlow, MinFEM
 
 function example()   
     # Setup domain
-    mesh::Mesh = import_mesh("meshes/cube-obstacle-1.msh")
-    noslip_boundary = select_boundaries(mesh, 10001, 10002, 10003, 10005, 10007)
+    mesh::Mesh = import_mesh("meshes/3d-channel-1.msh")
+    noslip_boundary = select_boundaries(mesh, 10001, 10002, 10003, 10005)
     inflow_boundary = select_boundaries(mesh, 10006)
 
     # Setup inflow
@@ -12,7 +12,7 @@ function example()
     # Setup and solve flow problem
     flow = StokesFlowSolver(mesh, inflow_boundary, noslip_boundary, inflow)
     solve!(flow)
-    write_to_vtk(flow, "results/cube-obstacle-1") 
+    write_to_vtk(flow, "results/3d-channel-1") 
 end
 
 example()

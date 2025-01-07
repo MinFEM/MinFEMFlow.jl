@@ -25,7 +25,7 @@ test MinFEMFlow
 Now, we can go through a basic example.
 We start the code by including the modules.
 Here, also the base module `MinFEM` itself is required to import the mesh and specify the boundaries in the following.
-```
+```julia
 using MinFEM, MinFEMFlow
 ```
 
@@ -33,8 +33,8 @@ using MinFEM, MinFEMFlow
 Import a mesh created via `gmsh` and specify boundary regions by the following commands.
 ```julia
 mesh::Mesh = import_mesh("meshes/channel-4.msh");
-noSlipBoundary = select_boundaries(mesh, 1001, 1003, 1004)
-inflowBoundary = select_boundaries(mesh, 1004)
+noslip_boundary = select_boundaries(mesh, 1001, 1003)
+inflow_boundary = select_boundaries(mesh, 1004)
 ```
 
 Then, we need to define an inflow function that will be prescribed as a Dirichlet condition on the corresponding boundary.
@@ -49,7 +49,7 @@ inflow(x) = [cos(pi*abs(x[2])/width), 0.0]
 
 With this information, we can create a `FlowSolver` object that contains the solution for the Stokes flow.
 ```julia
-flow = StokesFlowSolver(mesh, inflowBoundary, noSlipBoundary, inflow)
+flow = StokesFlowSolver(mesh, inflow_boundary, noslip_boundary, inflow)
 ```
 
 Finally, we can call the solve function which assembles the linear system, solves it and stores the solution as well as computation time.

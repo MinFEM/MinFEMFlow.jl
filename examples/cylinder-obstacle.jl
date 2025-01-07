@@ -3,8 +3,8 @@ using MinFEMFlow, MinFEM
 function example()   
     # Setup domain
     mesh::Mesh = import_mesh("meshes/cylinder-4.msh");
-    noSlipBoundary = select_boundaries(mesh, 1001, 1003, 1004, 1005)
-    inflowBoundary = select_boundaries(mesh, 1004)
+    noslip_boundary = select_boundaries(mesh, 1001, 1003, 1005)
+    inflow_boundary = select_boundaries(mesh, 1004)
 
     # Setup inflow
     box = boundingbox(mesh)
@@ -12,9 +12,9 @@ function example()
     inflow(x) = [cos(pi*abs(x[2])/width), 0.0]
 
     # Setup and solve flow problem
-    flow = StokesFlowSolver(mesh, inflowBoundary, noSlipBoundary, inflow)
+    flow = StokesFlowSolver(mesh, inflow_boundary, noslip_boundary, inflow)
     solve!(flow)
-    write_to_vtk(flow, "results/cylinder-obstacle") 
+    write_to_vtk(flow, "results/cylinder-obstacle-4") 
 end
 
 example()

@@ -1,7 +1,7 @@
 """
 MinFEMFlow
 
-A flow solver in julia based on MinFEM.
+A minimalistic Stokes flow solver in julia based on MinFEM.
 """
 module MinFEMFlow
 
