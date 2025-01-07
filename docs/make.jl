@@ -29,6 +29,6 @@ makedocs(
     remotes = nothing
 )
 
-#deploydocs(
-#    repo = "github.com/MinFEM/MinFEMFlow.jl.git"
-#)
+deploydocs(
+    repo = "github.com/MinFEM/MinFEMFlow.jl.git"
+)
