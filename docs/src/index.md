@@ -1,3 +1,5 @@
+![MinFEMFlow Logo](assets/logo.png)
+
 # MinFEMFlow.jl
 *A minimalistic Stokes flow solver for MinFEM.jl*
 
