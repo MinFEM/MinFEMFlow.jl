@@ -83,7 +83,7 @@ function assemble_saddlepointmatrix_stokes(mesh::Mesh; alpha::Float64=0.05)
     B = assemble_incompressibility_stokes(mesh)
     C = assemble_stabilization_stokes(mesh)
 
-    return [L B; B' -alpha*C]
+    return [L -B; B' alpha*C]
 end
 
 """
