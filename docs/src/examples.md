@@ -96,8 +96,9 @@ As a basic test case, we would like to consider the flow through a straight chan
 ```math
 \begin{aligned}
     \Omega &= (-7,7) \times (-3,3),\\
-    \Gamma_{\text{in}} &= \{-7\} \times (-3,3),\\
-    \Gamma_{\text{wall}} &=  (-7,7) \times \{-3, 3\}.
+    \Gamma_{\mathrm{wall}} &=  (-7,7) \times \{-3, 3\},\\
+    \Gamma_{\mathrm{in}} &= \{-7\} \times (-3,3),\\
+    \Gamma_{\mathrm{out}} &= \{-7\} \times (-3,3).
 \end{aligned}
 ```
 
@@ -161,9 +162,10 @@ The domain is then described as
 ```math
 \begin{aligned}
     \Omega &= [(-7,7) \times (-3,3)] \setminus \{x \in \mathbb{R}^2: \Vert x \Vert_2 \leq 0.5\}, \\
-    \Gamma_{\text{in}} &= \{-7\} \times (-3,3), \\
-    \Gamma_{\text{wall}} &=  (-7,7) \times \{-3, 3\},\\
-    \Gamma_{\text{obs}} &= \{x \in \mathbb{R}^2: \Vert x \Vert_2 = 0.5\}.
+    \Gamma_{\mathrm{wall}} &=  (-7,7) \times \{-3, 3\},\\
+    \Gamma_{\mathrm{in}} &= \{-7\} \times (-3,3), \\
+    \Gamma_{\mathrm{out}} &= \{-7\} \times (-3,3),\\
+    \Gamma_{\mathrm{obs}} &= \{x \in \mathbb{R}^2: \Vert x \Vert_2 = 0.5\}.
 \end{aligned}
 ```
 
