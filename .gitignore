@@ -3,7 +3,7 @@
 *.png
 *.svg
 *.pdf
-results/
+examples/results/
 
 docs/build/
 !docs/src/assets/**
