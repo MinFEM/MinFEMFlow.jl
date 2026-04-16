@@ -31,8 +31,7 @@ makedocs(
     authors = "Martin Siebenborn, Henrik Wyschka",
     format = FORMAT,
     pages = PAGES,
-    repo = Documenter.Remotes.GitHub("MinFEM", "MinFEMFlow.jl")
-    #remotes = REMOTES
+    remotes = REMOTES
 )
 
 deploydocs(
