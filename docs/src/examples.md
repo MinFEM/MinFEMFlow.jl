@@ -16,15 +16,17 @@ For a generic domain as sketched above, we can (assuming enough regularity) math
 write the strong for of the problem as
 
 ```math
-\begin{array}{rl}
-    -\Delta v + \nabla p = 0  & \text{in } \Omega,\\
-    \nabla \cdot v = 0  & \text{in } \Omega,\\
-    v = v_{\infty}  & \text{on } \Gamma_{\text{in}},\\
-    v = 0 & \text{on } \Gamma_{\text{wall}} \cup \Gamma_{\text{obs}}.
-\end{array}
+\begin{aligned}
+    -\Delta v + \nabla p &= 0  && \text{in } \Omega,\\
+    \nabla \cdot v &= 0  && \text{in } \Omega,\\
+    v &= v_{\infty}  && \text{on } \Gamma_{\mathrm{in}},\\
+    v &= 0 && \text{on } \Gamma_{\mathrm{wall}} \cup \Gamma_{\mathrm{obs}}\\
+    \partial_{\eta} v &= p\eta && \text{on } \Gamma_{\mathrm{out}}.
+\end{aligned}
 ```
 
-In the setting of finite elements, we would like to consider weak solutions to the problem,
+In the setting of finite elements,
+we would like to consider weak solutions to the problem,
 which reads
 ```math
 \begin{aligned}
@@ -34,9 +36,18 @@ which reads
         &\qquad\forall \psi \in \mathbb{P},\\
 \end{aligned}
 ```
-where ``\mathbb{V} = H^{1}_0(\Omega,\mathbb{R}^d)``
-and ``\mathbb{P} = \{p \in L^2(\Omega): \int_\Omega p(x) \mathrm{ d}x = 0\}``
+where ``\mathbb{V} = \{ v \in \mathrm{H}^{1}(\Omega,\mathbb{R}^d): v = 0 \text{ on } \partial\Omega \setminus \Gamma_{\mathrm{out}} \}``
+and ``\mathbb{P} = \mathrm{L}^2(\Omega)``
 denote the velocity and pressure space respectively.
+Here, note that this only describes a problem with homogeneous Dirichlet condition as
+(under sufficient regularity of domain and ``v_{\infty}``) any inhomogeneous problem
+can be transformed into a homogeneous problem by considering a so-called lifting of the 
+boundary condition to the whole domain and then solving for ``\tilde{u} = u - g``,
+where ``\tilde{u} \in \mathbb{V}`` and ``g \in \{ v \in \mathrm{H}^{1}(\Omega,\mathbb{R}^d): v = v_{\infty} \text{ on } \Gamma_{\mathrm{out}} \text{ and } \Gamma_ v = 0 \text{ on } \partial\Omega \setminus \Gamma_{\mathrm{out}}\}``.
+Further, note that the do-nothing condition condition on the outlet fixes the value of the pressure
+and hence the common restriction to ``\mathrm{L}^2`` functions with zero mean in the pressure space
+is not necessary here.
+In case there is no outlet, i.e., ``\Gamma_{\mathrm{out}} = \emptyset``, the pressure is only determined up a constant.
 
 The discretized system becomes then a symmetric saddle point system,
 where ``L`` is the classical discretization of a vector-valued Laplace operator,
@@ -45,25 +56,30 @@ to a divergence operator on the relevant discretized spaces.
 ```math
 \begin{aligned}
     S = \begin{pmatrix}
-        L & B\\
-        B^{\intercal} & -\alpha C
+        L & -B\\
+        B^{\intercal} & \alpha C
     \end{pmatrix}
 \end{aligned}
 ```
 
-MinFEM only uses first-order finite elements, which are known for saddle point problems to not
-fulfill the inf-sup-condition and are thus not naturally pressure stable.
+MinFEM only provides first-order finite elements, which are known for saddle point problems to not
+fulfill the inf-sup-condition and are thus not naturally pressure stable [1].
 A common technique to circumvent this issue would be to use second-order finite elements for the velocity.
 The combination is then called Taylor-Hood elements and archive stability.
 Unfortunately, we are not able to do this with MinFEM.
 However, there are also stabilization techniques for-first order elements available.
-We will use a version of [1] corresponding to a scaled negative Laplacian.
+We will use a version of [2] corresponding to a scaled Laplacian.
 In particular, ``C`` is a discretization of the Laplacian,
 where the nodal contributions of each element ``T_k`` are scaled
-by ``\frac{\operatorname{vol}(T_k)}{\sqrt{d}}`` and is thus mesh dependent.      
+by ``\frac{\operatorname{diam}(T_k)^2}{d}`` and is thus mesh dependent.      
 Further, we usually just fix ``\alpha = 0.05`` as reasonable.
 
-[1] T. J. Hughes, L. P. Franca, and M. Balestra.
+[1] S. C. Brenner and L. R. Scott.
+*The Mathematical Theory of Finite Element Methods*. 
+3rd ed. Vol. 15. Texts in Applied Mathematics. New York: Springer, 2008.
+doi: [978-0-387-75934-0](https://doi.org/10.1007/978-0-387-75934-0).
+
+[2] T. J. Hughes, L. P. Franca, and M. Balestra.
 *A new finite element formulation for computational fluid dynamics: V. Circumventing the babuška-brezzi condition: a stable Petrov-Galerkin formulation of the stokes problem accommodating equal-order interpolations*. 
 In: Computer Methods in Applied Mechanics and Engineering 59.1 (1986), pp. 85–99.
 doi: [10.1016/0045-7825(86)90025-3](https://doi.org/10.1016/0045-7825(86)90025-3).
@@ -80,8 +96,9 @@ As a basic test case, we would like to consider the flow through a straight chan
 ```math
 \begin{aligned}
     \Omega &= (-7,7) \times (-3,3),\\
-    \Gamma_{\text{in}} &= \{-7\} \times (-3,3),\\
-    \Gamma_{\text{wall}} &=  (-7,7) \times \{-3, 3\}.
+    \Gamma_{\mathrm{wall}} &=  (-7,7) \times \{-3, 3\},\\
+    \Gamma_{\mathrm{in}} &= \{-7\} \times (-3,3),\\
+    \Gamma_{\mathrm{out}} &= \{-7\} \times (-3,3).
 \end{aligned}
 ```
 
@@ -125,7 +142,7 @@ solve!(flow)
 write_to_vtk(flow, "results/channel")
 ```
 
-Note that we assume the directory `results/` to exists.
+Note that we assume the directory `examples/results/` to exists.
 Otherwise, the write command will throw an error.
 If you want to check during runtime if the directory exists and create it if not,
 you could add `mkpath("results")` before. 
@@ -145,9 +162,10 @@ The domain is then described as
 ```math
 \begin{aligned}
     \Omega &= [(-7,7) \times (-3,3)] \setminus \{x \in \mathbb{R}^2: \Vert x \Vert_2 \leq 0.5\}, \\
-    \Gamma_{\text{in}} &= \{-7\} \times (-3,3), \\
-    \Gamma_{\text{wall}} &=  (-7,7) \times \{-3, 3\},\\
-    \Gamma_{\text{obs}} &= \{x \in \mathbb{R}^2: \Vert x \Vert_2 = 0.5\}.
+    \Gamma_{\mathrm{wall}} &=  (-7,7) \times \{-3, 3\},\\
+    \Gamma_{\mathrm{in}} &= \{-7\} \times (-3,3), \\
+    \Gamma_{\mathrm{out}} &= \{-7\} \times (-3,3),\\
+    \Gamma_{\mathrm{obs}} &= \{x \in \mathbb{R}^2: \Vert x \Vert_2 = 0.5\}.
 \end{aligned}
 ```
 
